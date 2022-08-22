@@ -20,23 +20,11 @@ class PokemonService  @Inject constructor(private val api:PokemonApiClient){
     suspend fun getListPokemon(limit:Int,offset:Int): PokemonListApiResults {
 
         return withContext(Dispatchers.IO){
-
-            Log.d("PRUEBA","LANZO un get lista pokemon")
             val response: Response<PokemonListApiResults> = api.getListPokemon(limit,offset)
 
             response.body() ?: PokemonListApiResults(listOf())
 
-            /*withContext(Dispatchers.IO) {
-                for (pokemonResult: PokemonResult in pokemonListApiResults.results) {
-                    withContext(Dispatchers.IO) {
-                        Log.d("PRUEBA", "LANZO un get info pokemon")
-                        listaPokemonModel.emit(getInfoPokemon(pokemonResult.url))
-                    }
-                }
-            }*/
 
-            //Log.d("PRUEBA","DEVUELVO la lista")
-            //listaPokemonModel
 
         }
     }

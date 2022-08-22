@@ -31,12 +31,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         pokemonListViewModel.listPokemon.observe(this,{
-            Log.d("PRUEBA","LLEGA LISTA -----------------------------")
+            mutableListPokemon.clear()
             mutableListPokemon.addAll(it)
 
             mutableListPokemon.sortBy { e -> e.id }
 
             Log.d("PRUEBA","${mutableListPokemon.map { e -> e.id }}")
+            Log.d("PRUEBA","${mutableListPokemon.size}")
         })
     }
 }

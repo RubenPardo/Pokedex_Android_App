@@ -7,13 +7,13 @@ data class PokemonDomain (
     val id:Int,
     val order: String,
     val name:String,
-    val officialArtwork: String,
+    val officialArtwork: String?,
     val sprites: List<String>,
     val tipos: List<PokemonTypes>
 )
 
 fun PokemonModel.toDomain() = PokemonDomain(id = id,order=order,name=name,
-    officialArtwork = sprites.otherSprites.officialArtWork.frontDefault,
+    officialArtwork = sprites.otherSprites.officialArtWork?.frontDefault,
     sprites = listOf(sprites.frontDefault,sprites.backDefault),
     tipos = types
     )

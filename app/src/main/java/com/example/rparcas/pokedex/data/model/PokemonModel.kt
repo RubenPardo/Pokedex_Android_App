@@ -36,7 +36,7 @@ data class PokemonSprites(
     @SerializedName("other") val otherSprites: OtherSprites
 )
 data class OtherSprites(
-    @SerializedName("official-artwork") val officialArtWork: OfficialArtwork
+    @SerializedName("official-artwork") val officialArtWork: OfficialArtwork?
 )
 data class OfficialArtwork(
     @SerializedName("front_default") val frontDefault: String

@@ -3,4 +3,5 @@
     <string name="filterByType">Filter by type</string>
     <string name="search_title">Search by name ..</string>
     <string name="search_hint">Search by name ..</string>
+    <string name="sin_resultados">No pokemon found</string>
 </resources>

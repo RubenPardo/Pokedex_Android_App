@@ -15,7 +15,9 @@ import android.view.Menu
 import android.app.SearchManager
 import android.content.Context
 import android.util.Log
+import android.view.View
 import android.widget.SearchView
+import androidx.recyclerview.widget.GridLayoutManager
 
 
 //https://pokeapi.co/docs/v2#pokemon-section
@@ -29,8 +31,8 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private lateinit var adapter: PokemonAdapter
 
     companion object {
-        val TAG_FILTRO_1 = "filtrar_tipo_1"
-        val TAG_FILTRO_2 = "filtrar_tipo_2"
+        const val TAG_FILTRO_1 = "filtrar_tipo_1"
+        const val TAG_FILTRO_2 = "filtrar_tipo_2"
     }
 
 
@@ -45,15 +47,39 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
 
         initRecyclerView()
+
+        binding.toggleListGridListaPokemon.setOnClickListener{
+            val numColumns:Int = if(it.isActivated){
+                // modo lista
+                1
+            }else{
+                // modo grid
+                2
+            }
+            it.isActivated = !it.isActivated
+            adapter.numOfColumnGrid = numColumns
+            binding.rvPokemon.layoutManager = GridLayoutManager(this,numColumns)
+        }
+
         pokemonListViewModel.getListPokemon(1154)
 
         pokemonListViewModel.listPokemonLiveData.observe(this,{
+
+
             mutableListPokemon.clear() // no debemos borrar porque en teoria solo se entra una vez y no se pide
             // mas de una vez por lo que no habra duplicidad
             mutableListPokemon.addAll(it)
 
             mutableListPokemon.sortBy { e -> e.id }
             adapter.notifyDataSetChanged()
+
+            if(it.isEmpty()){
+                binding.rvPokemon.visibility = View.GONE
+                binding.tvEmptyPokemonList.visibility = View.VISIBLE
+            }else{
+                binding.rvPokemon.visibility = View.VISIBLE
+                binding.tvEmptyPokemonList.visibility = View.GONE
+            }
 
         })
 
@@ -94,6 +120,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private fun initRecyclerView() {
 
         adapter = PokemonAdapter(mutableListPokemon)
+        adapter.numOfColumnGrid = 1
         binding.rvPokemon.layoutManager = LinearLayoutManager(this)
         binding.rvPokemon.adapter = adapter
     }

@@ -8,6 +8,8 @@ import com.example.rparcas.pokedex.domain.PokemonDomain
 
 class PokemonAdapter (private val listPokemon:List<PokemonDomain>): RecyclerView.Adapter<PokemonViewHolder>() {
 
+    var numOfColumnGrid = 1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return PokemonViewHolder(layoutInflater.inflate(R.layout.pokemon_item,parent,false))
@@ -15,7 +17,7 @@ class PokemonAdapter (private val listPokemon:List<PokemonDomain>): RecyclerView
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
 
-        holder.bind(listPokemon[position])
+        holder.bind(listPokemon[position],numOfColumnGrid)
     }
 
     override fun getItemCount(): Int {

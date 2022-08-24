@@ -19,16 +19,24 @@ class PokemonListViewModel @Inject constructor(
 ): ViewModel(){
 
 
-    val listPokemon =  MutableLiveData<List<PokemonDomain>>()
+    val listPokemonLiveData =  MutableLiveData<List<PokemonDomain>>()
+    private val listaPokemon = mutableListOf<PokemonDomain>()
+    val tipoFiltro1 = MutableLiveData<String?>() // filtro de tipo pokemon 1
+    val tipoFiltro2 = MutableLiveData<String?>() // filtro de tipo pokemon 2
 
 
 
+    /**
+     * Obtener los pokemon de la BD y si no hay datos obtenerlos de la API
+     * Guarda la lista en la variable [listaPokemon] para poder filtrar luego
+     * @param cuantos cuantos pokemon pedir empenzando desde el primero
+     * @return lista de pokemon via [listPokemonLiveData]
+     */
     fun getListPokemon(cuantos:Int){
 
-
+        listaPokemon.clear()
 
         // obtener primero de BD
-
         viewModelScope.launch {
             val pokemonList = obtenerListaPokemonDB()
 
@@ -45,7 +53,8 @@ class PokemonListViewModel @Inject constructor(
                         viewModelScope.launch {
                             obtenerListaPokemonAPI(topePokemon,topePokemon*i).collect{
                                 Log.d("PRUEBA","COLLECT")
-                                listPokemon.postValue(it)
+                                listaPokemon.addAll(it)
+                                listPokemonLiveData.postValue(listaPokemon)
                             }
 
                         }
@@ -54,18 +63,89 @@ class PokemonListViewModel @Inject constructor(
                 }
             }else{
                 // hay datos en la BD, publicar en la vista
-                listPokemon.postValue(pokemonList)
+                listaPokemon.addAll(pokemonList)
+                // de esta forma si se actualiza la vista y se vuelve a pedir, se vuelven a aplicar los filtros
+                listPokemonLiveData.postValue(filtrarListaPokemonPorTipos(tipoFiltro1.value,tipoFiltro2.value))
 
             }
 
         }
 
-
-
-
-
-
     }
+
+    /**
+     * @param tipo1 tipo pokemon 1 para filtrar la lista, si es null es para quitarlo
+     * @return lista de pokemon domain por el live data
+     */
+    fun filtrarTipo1(tipo1:String?){
+         // seteamos valor para que en la vista principal se pinte
+        if(tipo1 == tipoFiltro1.value){
+            // si selecciona el mismo, lo quitamos
+            tipoFiltro1.postValue(null)
+            tipoFiltro1.value = null
+        }else{
+            tipoFiltro1.postValue(tipo1) // esto lanzo un thread para avisar a los observables
+            tipoFiltro1.value = tipo1
+        }
+        listPokemonLiveData.postValue(filtrarListaPokemonPorTipos(tipoFiltro1.value,tipoFiltro2.value))
+    }
+
+    /**
+     * @param tipo1 tipo pokemon 1 para filtrar la lista, si es null es para quitarlo
+     * @return lista de pokemon domain por el live data
+     */
+    fun filtrarTipo2(tipo2:String?){
+        // seteamos valor para que en la vista principal se pinte
+        if(tipo2 == tipoFiltro2.value){
+            // si selecciona el mismo, lo quitamos
+            tipoFiltro2.postValue(null)
+            tipoFiltro2.value = null
+        }else{
+            tipoFiltro2.postValue(tipo2)
+            tipoFiltro2.value = tipo2
+        }
+        listPokemonLiveData.postValue(filtrarListaPokemonPorTipos(tipoFiltro1.value,tipoFiltro2.value))
+    }
+
+    /**
+     * Filtrar la lista de pokemon por tipos, 4 opciones
+     * 1. tipo1 = null y tipo2 = null =  todos los pokemon
+     * 2. tipo1 = ALGO tipo2 = null =  los pokemon que tienen el tipo 1 y cualquier en el segundo
+     * 3. tipo1 = null tipo2 = ALGO =  los pokemon que tienen el tipo 2 y cualquier en el primero
+     * 2. tipo1 = ALGO tipo2 = ALGO =  los pokemon que coincidan con esos dos tipos
+     *
+     * @param tipo1 tipo 1 a filtrar
+     * @param tipo2 tipo 2 a filtrar
+     *
+     * @return lista de [PokemonDomain] filtrada por los tipos
+     *
+     */
+    private fun filtrarListaPokemonPorTipos(tipo1:String?,tipo2:String?):List<PokemonDomain>{
+        return if(tipo1.isNullOrEmpty() && tipo2.isNullOrEmpty()){
+            // Opcion 1
+            listaPokemon
+
+        }else if (!tipo1.isNullOrEmpty() && tipo2.isNullOrEmpty()){
+            // Opcion 2
+             listaPokemon.filter { pokemonDomain -> pokemonDomain.tipos[0].type.name == tipo1 }
+
+        }else if (tipo1.isNullOrEmpty() && !tipo2.isNullOrEmpty()) {
+            // Opcion 3
+            val list = listaPokemon.filter { pokemonDomain ->
+                    // puede que no tenga 2 tipos
+                    (pokemonDomain.tipos.size > 1 ) && pokemonDomain.tipos[1].type.name == tipo2 }
+             list
+        }else{
+            // Opcion 4
+            val listPokemonTemp = listaPokemon.filter { pokemonDomain -> pokemonDomain.tipos[0].type.name == tipo1 }
+            val list = listPokemonTemp.filter { pokemonDomain ->
+                // puede que no tenga 2 tipos
+                (pokemonDomain.tipos.size > 1 ) && pokemonDomain.tipos[1].type.name == tipo2 }
+             list
+
+        }
+    }
+
 }
 
 

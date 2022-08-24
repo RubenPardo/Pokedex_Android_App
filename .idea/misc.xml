@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Cosas/Pokedex/app/src/main/res/drawable/bottom_dialog_background.xml" value="0.23425925925925925" />
+        <entry key="..\:/Cosas/Pokedex/app/src/main/res/drawable/checkbox_fav_selector.xml" value="0.2703125" />
+        <entry key="..\:/Cosas/Pokedex/app/src/main/res/drawable/ic_corazon_filled.xml" value="0.2703125" />
+        <entry key="..\:/Cosas/Pokedex/app/src/main/res/drawable/ic_corazon_outline.xml" value="0.2703125" />
+        <entry key="..\:/Cosas/Pokedex/app/src/main/res/drawable/rounded_corner.xml" value="0.14635416666666667" />
         <entry key="..\:/Cosas/Pokedex/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Cosas/Pokedex/app/src/main/res/layout/bottom_sheet_filtro_tipos_layout.xml" value="0.2976190476190476" />
+        <entry key="..\:/Cosas/Pokedex/app/src/main/res/layout/chip_button_tipo_pokemon_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Cosas/Pokedex/app/src/main/res/layout/pokemon_item.xml" value="0.4" />
       </map>
     </option>
   </component>

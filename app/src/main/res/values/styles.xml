@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style parent="Widget.AppCompat.TextView" name="FondoRedondeado">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:background">@drawable/rounded_corner</item>
+    </style>
+
+    <style name="chipButtonTipoPokemon" parent="ShapeAppearanceOverlay.Material3.Chip">
+        <item name="android:textColor">@color/white</item>
+        <item name="chipBackgroundColor">@color/chipBackgroundDefault</item>
+        <item name="textStartPadding">12dp</item>
+        <item name="textEndPadding">12dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+</resources>

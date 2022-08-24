@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/ic_corazon_outline"
+        android:state_checked="false"/>
+    <item android:drawable="@drawable/ic_corazon_filled"
+        android:state_checked="true"/>
+
+    <item android:state_pressed="true"
+        android:drawable="@drawable/ic_corazon_filled" /> <!-- pressed -->
+
+    <item android:state_focused="true"
+        android:drawable="@drawable/ic_corazon_filled" /> <!-- focused -->
+
+    <item android:state_hovered="true"
+        android:drawable="@drawable/ic_corazon_outline" /> <!-- hovered -->
+
+    <item android:drawable="@drawable/ic_corazon_outline" /> <!-- default -->
+
+</selector>

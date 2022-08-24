@@ -10,10 +10,17 @@ import com.example.rparcas.pokedex.domain.PokemonDomain
 import com.example.rparcas.pokedex.ui.BottomSheetFragmentTipoPokemon
 import com.example.rparcas.pokedex.ui.PokemonAdapter
 import com.example.rparcas.pokedex.ui.PokemonListViewModel
+import android.view.Menu
+
+import android.app.SearchManager
+import android.content.Context
+import android.util.Log
+import android.widget.SearchView
+
 
 //https://pokeapi.co/docs/v2#pokemon-section
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private lateinit var binding: ActivityMainBinding
     private val pokemonListViewModel: PokemonListViewModel by viewModels()
@@ -83,11 +90,41 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     private fun initRecyclerView() {
 
         adapter = PokemonAdapter(mutableListPokemon)
         binding.rvPokemon.layoutManager = LinearLayoutManager(this)
         binding.rvPokemon.adapter = adapter
+    }
+
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options_menu_pokemon_list, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.search).actionView as SearchView).apply {
+            // Poner el listener cuando escribe
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setOnQueryTextListener(this@MainActivity)
+        }
+
+        return true
+    }
+
+
+
+    // callbacks del search view para filtrar por nombre
+    override fun onQueryTextSubmit(texto: String?): Boolean {
+        pokemonListViewModel.filtrarPorNombre(texto)
+        return false
+    }
+
+    override fun onQueryTextChange(texto: String?): Boolean {
+        pokemonListViewModel.filtrarPorNombre(texto)
+        return false
     }
 
 

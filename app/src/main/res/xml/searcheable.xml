@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Una configuración que permite búsquedas define cómo se comporta SearchView
+y se define en un archivo res/xml/searchable.xml. Como mínimo, debe contener un atributo
+android:label que tenga el mismo valor que el atributo android:label de <application> o <activity>
+en tu manifiesto de Android. Sin embargo, también se recomienda
+agregar un atributo android:hint a fin de que el usuario tenga una idea de lo que se ingresa en el cuadro de búsqueda:
+-->
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/app_name"
+    android:hint="@string/search_hint" />

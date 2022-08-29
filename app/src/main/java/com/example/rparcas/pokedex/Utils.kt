@@ -42,6 +42,26 @@ class Utils {
             return color
         }
 
+        /**
+         * Formatear el numero de orden a #XXX
+         * @param order string con un numero con formato 1-9999
+         * @return string con formato #XXX
+         */
+        fun formatearOrdenPokemon(order: Int): String {
+            var resultado = ""
+            if(order<10){
+                resultado = "#00$order"
+            }else if(order<100){
+                resultado = "#0$order"
+            }else{
+                resultado = "#$order"
+            }
+
+
+
+            return resultado
+        }
+
 
         val LISTA_TIPO_POKEMON = listOf<String>(
             "grass",

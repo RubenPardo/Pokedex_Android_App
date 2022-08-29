@@ -28,6 +28,10 @@ data class PokemonModel(
     @SerializedName("name") val name: String,
     @SerializedName("order") val order: String,
     @SerializedName("types") val types: List<PokemonTypes>,
+    @SerializedName("base_experience") val base_experience: Int,
+    @SerializedName("height") val height: Int,
+    @SerializedName("weight") val weight: Int,
+    @SerializedName("stats") val stats: List<PokemonStatApi>
 )
 
 data class PokemonSprites(
@@ -47,5 +51,14 @@ data class PokemonTypes(
     @SerializedName("type") val type: PokemonType
 )
 data class PokemonType(
+    @SerializedName("name") val name: String
+)
+
+data class PokemonStatApi(
+    @SerializedName("base_stat") val value: Int,
+    @SerializedName("stat") val pokemonStat: PokemonStatApiName
+)
+
+data class PokemonStatApiName(
     @SerializedName("name") val name: String
 )

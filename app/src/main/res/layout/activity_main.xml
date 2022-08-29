@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.view.MainActivity">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -23,14 +23,14 @@
         android:layout_marginStart="8dp"
         android:text="TIPO 1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/svNombrePokemon" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chip_button_filtro_tipo_pokemon_2"
         style="@style/chipButtonTipoPokemon"
         android:text="TIPO 2"
         app:layout_constraintStart_toEndOf="@+id/chip_button_filtro_tipo_pokemon_1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/svNombrePokemon" />
 
     <ToggleButton
         android:id="@+id/toggleListGridListaPokemon"
@@ -54,5 +54,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chip_button_filtro_tipo_pokemon_2" />
+
+    <SearchView
+        android:id="@+id/svNombrePokemon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:queryHint="@string/search_hint"
+        android:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

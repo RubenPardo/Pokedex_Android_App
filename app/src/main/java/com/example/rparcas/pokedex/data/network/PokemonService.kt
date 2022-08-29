@@ -37,7 +37,7 @@ class PokemonService  @Inject constructor(private val api:PokemonApiClient){
         return withContext(Dispatchers.IO){
             api.getInfoPokemon(url).body() ?: PokemonModel(-1, PokemonSprites("","",
                 OtherSprites(OfficialArtwork(""))
-            ),"","", listOf())
+            ),"","", listOf(),0,0,0,listOf())
 
         }
 

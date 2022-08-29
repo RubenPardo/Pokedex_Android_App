@@ -29,7 +29,8 @@
             app:tint="#B2FAFAFA" />
 
         <ImageView
-            android:id="@+id/ivPokemon"
+            android:transitionName="pokemonImagen"
+            android:id="@+id/ivPokemonItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -57,12 +58,10 @@
             app:layout_constraintTop_toBottomOf="@+id/tvNombrePokemon" />
 
         <TextView
-            android:textStyle="bold"
-            android:textColor="@color/white"
+            style="@style/Titulo"
             android:id="@+id/tvNombrePokemon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

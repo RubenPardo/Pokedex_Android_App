@@ -1,26 +1,17 @@
 package com.example.rparcas.pokedex.ui
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.content.ContextCompat.getDrawable
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.example.rparcas.pokedex.MainActivity
+import com.example.rparcas.pokedex.ui.view.MainActivity
 import com.example.rparcas.pokedex.R
 import com.example.rparcas.pokedex.Utils
-import com.example.rparcas.pokedex.Utils.Companion.LISTA_TIPO_POKEMON
 import com.example.rparcas.pokedex.databinding.BottomSheetFiltroTiposLayoutBinding
+import com.example.rparcas.pokedex.ui.viewmodel.PokemonListViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipDrawable
 
 /**
  * A este fragment se le puede invocar de dos botones, el del tipo de pokemon 1 o 2,

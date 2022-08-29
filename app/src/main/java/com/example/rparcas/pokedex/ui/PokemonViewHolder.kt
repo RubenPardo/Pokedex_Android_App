@@ -16,7 +16,7 @@ class PokemonViewHolder (view: View): RecyclerView.ViewHolder(view) {
 
         // color de la tarjeta
         binding.cvPokemon.setCardBackgroundColor(getColor(binding.root.context,Utils.obtenerReferenciaColorSegunTipo(pokemon.tipos[0].type.name)))
-        Picasso.get().load(pokemon.officialArtwork ?: pokemon.sprites[0]).into(binding.ivPokemon)
+        Picasso.get().load(pokemon.officialArtwork ?: pokemon.sprites[0]).into(binding.ivPokemonItem)
 
         if(numOfColumnGrid == 1){
             // modo linear

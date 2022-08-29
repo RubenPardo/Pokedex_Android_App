@@ -1,4 +1,4 @@
-package com.example.rparcas.pokedex
+package com.example.rparcas.pokedex.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,18 +9,18 @@ import com.example.rparcas.pokedex.databinding.ActivityMainBinding
 import com.example.rparcas.pokedex.domain.PokemonDomain
 import com.example.rparcas.pokedex.ui.BottomSheetFragmentTipoPokemon
 import com.example.rparcas.pokedex.ui.PokemonAdapter
-import com.example.rparcas.pokedex.ui.PokemonListViewModel
-import android.view.Menu
+import com.example.rparcas.pokedex.ui.viewmodel.PokemonListViewModel
 
-import android.app.SearchManager
-import android.content.Context
-import android.util.Log
+import android.content.Intent
 import android.view.View
 import android.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.rparcas.pokedex.Utils
+import androidx.core.app.ActivityOptionsCompat
+import com.example.rparcas.pokedex.R
 
 
-//https://pokeapi.co/docs/v2#pokemon-section
+//https://pokeapi.co
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private lateinit var adapter: PokemonAdapter
 
     companion object {
+        const val KEY_POKEMON_ID = "key_id_pokemon"
         const val TAG_FILTRO_1 = "filtrar_tipo_1"
         const val TAG_FILTRO_2 = "filtrar_tipo_2"
     }
@@ -92,14 +93,24 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             mostrarDialogFiltroTipos(TAG_FILTRO_2)
         }
 
+        binding.svNombrePokemon.setOnQueryTextListener(this)
+
         pokemonListViewModel.tipoFiltro1.observe(this,{
-            binding.chipButtonFiltroTipoPokemon1.setChipBackgroundColorResource(Utils.obtenerReferenciaColorSegunTipo(it?:""))
+            binding.chipButtonFiltroTipoPokemon1.setChipBackgroundColorResource(
+                Utils.obtenerReferenciaColorSegunTipo(
+                    it ?: ""
+                )
+            )
             binding.chipButtonFiltroTipoPokemon1.text = Utils.capitalize(it ?: "TIPO 1")
             binding.chipButtonFiltroTipoPokemon1.tag = it
         })
 
         pokemonListViewModel.tipoFiltro2.observe(this,{
-            binding.chipButtonFiltroTipoPokemon2.setChipBackgroundColorResource(Utils.obtenerReferenciaColorSegunTipo(it?:""))
+            binding.chipButtonFiltroTipoPokemon2.setChipBackgroundColorResource(
+                Utils.obtenerReferenciaColorSegunTipo(
+                    it ?: ""
+                )
+            )
             binding.chipButtonFiltroTipoPokemon2.text = Utils.capitalize(it ?: "TIPO 2")
             binding.chipButtonFiltroTipoPokemon2.tag = it
         })
@@ -119,28 +130,34 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private fun initRecyclerView() {
 
-        adapter = PokemonAdapter(mutableListPokemon)
+        adapter = PokemonAdapter(mutableListPokemon,
+            // callback del item click del adapter
+            object : PokemonAdapter.ItemClickListener {
+                override fun onItemClick(idPokemon:Int, view:View){
+                    navegarAPokemonInfoActivity(idPokemon,view)
+                }
+            }
+        )
         adapter.numOfColumnGrid = 1
         binding.rvPokemon.layoutManager = LinearLayoutManager(this)
         binding.rvPokemon.adapter = adapter
     }
 
 
+    /**
+     * Abrir la activity {PokemonInfoActivity.kt}
+     * @param id del pokemon a mostrar en la siguiente pantalla
+     */
+    fun navegarAPokemonInfoActivity(id: Int, view: View){
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            view.findViewById(R.id.ivPokemonItem), "pokemonImagen"
+        )
+        val intent:Intent = Intent(this, PokemonInfoActivity::class.java)
+        intent.putExtra(KEY_POKEMON_ID,id)
+        startActivity(intent,options.toBundle())
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.options_menu_pokemon_list, menu)
-
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.search).actionView as SearchView).apply {
-            // Poner el listener cuando escribe
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            setOnQueryTextListener(this@MainActivity)
-        }
-
-        return true
     }
-
 
 
     // callbacks del search view para filtrar por nombre

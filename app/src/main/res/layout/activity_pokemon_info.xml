@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fuego"
+    android:id="@+id/layout_background"
+    tools:context=".ui.view.PokemonInfoActivity">
+
+    <TextView
+        android:id="@+id/tvPokemonInfoNombre"
+        style="@style/Titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Nombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvInfoTipo1"
+        style="@style/FondoRedondeado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/tvPokemonInfoNombre"
+        app:layout_constraintTop_toBottomOf="@+id/tvPokemonInfoNombre" />
+
+    <TextView
+        android:id="@+id/tvInfoTipo2"
+        style="@style/FondoRedondeado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/tvInfoTipo1"
+        app:layout_constraintStart_toEndOf="@+id/tvInfoTipo1"
+        app:layout_constraintTop_toTopOf="@+id/tvInfoTipo1" />
+
+    <ImageView
+        android:id="@+id/ivViewFondo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-16dp"
+        android:layout_marginTop="8dp"
+        android:minWidth="300dp"
+        android:minHeight="300dp"
+        android:rotation="340"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvInfoTipo2"
+        app:srcCompat="@drawable/ic_pokeballicon"
+        app:tint="#B2FAFAFA" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-32dp"
+        android:background="@drawable/pokemon_info_background_redondeado"
+        android:paddingStart="16dp"
+        android:paddingTop="64dp"
+        android:paddingEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPokemonInfo">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPeso">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/statTitle"
+                    android:id="@+id/tvTitleHP"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/health" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/tvHP"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="23" />
+
+                <ProgressBar
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/pBarHP"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/statTitle"
+                    android:id="@+id/tvAttackTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/attack" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/tvAttack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="75" />
+
+                <ProgressBar
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/pBarAttack"
+                    android:layout_width="0dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/statTitle"
+                    android:id="@+id/tvTitleDefense"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/defense" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/tvDefense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="220" />
+
+                <ProgressBar
+                    android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/pBarDefense"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/statTitle"
+                    android:id="@+id/tvTitleSpecialAttack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/special_attack" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/tvSpAttack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="75" />
+
+                <ProgressBar
+                    android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/pBarSpecialAttack"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/statTitle"
+                    android:id="@+id/tvTitleSpecialDefense"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/special_defense" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/tvSpDefense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="50" />
+
+                <ProgressBar
+                    android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/pBarSpecialDefense"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    style="@style/statTitle"
+                    android:id="@+id/tvTitleSpeed"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/speed" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:id="@+id/tvSpeed"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="75" />
+
+                <ProgressBar
+                    android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/pBarSpeed"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weight"
+            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvBaseExperience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text view"
+            app:layout_constraintEnd_toEndOf="@+id/textView6"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/base_experience"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/height"
+            app:layout_constraintBottom_toTopOf="@+id/tvPeso"
+            app:layout_constraintEnd_toStartOf="@+id/textView6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/tvPeso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/tvAltura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/textView3"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/ivPokemonInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
+        android:minWidth="200dp"
+        android:minHeight="200dp"
+        android:transitionName="pokemonImagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInfoTipo1"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:id="@+id/tvPokemonInfoOrden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/tvInfoTipo1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvPokemonInfoNombre" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

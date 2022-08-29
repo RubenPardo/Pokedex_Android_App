@@ -1,4 +1,4 @@
-package com.example.rparcas.pokedex.ui
+package com.example.rparcas.pokedex.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -49,10 +49,8 @@ class PokemonListViewModel @Inject constructor(
 
                 (0..numVeces.toInt()).forEach{ i ->
                     if(topePokemon*i<cuantos){
-                        Log.d("PRUEBA","SE LANZA")
                         viewModelScope.launch {
                             obtenerListaPokemonAPI(topePokemon,topePokemon*i).collect{
-                                Log.d("PRUEBA","COLLECT")
                                 listaPokemon.addAll(it)
                                 listPokemonLiveData.postValue(listaPokemon)
                             }

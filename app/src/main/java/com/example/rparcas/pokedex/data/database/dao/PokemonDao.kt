@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.rparcas.pokedex.data.database.entities.PokemonEntity
 import com.example.rparcas.pokedex.data.model.PokemonListApiResults
+import com.example.rparcas.pokedex.domain.PokemonDomain
 
 @Dao
 interface PokemonDao {
@@ -16,6 +17,9 @@ interface PokemonDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(pokemonList:List<PokemonEntity>)
+
+    @Query("select * from pokemon_table where id=:id")
+    suspend fun getPokemonById(id: Int): PokemonEntity
 
 }
 

@@ -19,7 +19,6 @@ class ObtenerListaPokemonAPI @Inject constructor(
      */
     suspend operator fun invoke(limit:Int,offset:Int): Flow<List<PokemonDomain>> = flow  {
 
-
             // obtener de API
             val listPokemonUrls = pokemonRepository.getListPokemonFromApi(limit, offset)
 
@@ -28,7 +27,8 @@ class ObtenerListaPokemonAPI @Inject constructor(
             val mutableListPokemon: MutableList<PokemonDomain> = mutableListOf()
             for (url:String in listPokemonUrls.results.map { it.url }){
                 // pedir pokemon repositorio
-                mutableListPokemon.add(pokemonRepository.getInfoPokemonFromApi(url))
+                val pokemon = pokemonRepository.getInfoPokemonFromApi(url)
+                mutableListPokemon.add(pokemon)
                 // a los 20 emitir
                 if(cont++ == 20){
                     // return -----

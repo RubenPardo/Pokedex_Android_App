@@ -36,4 +36,8 @@ class PokemonRepository @Inject constructor(
         return api.getInfoPokemon(url).toDomain()
     }
 
+    suspend fun getInfoPokemonFromDB(id: Int): PokemonDomain {
+        return dao.getPokemonById(id).toDomain()
+    }
+
 }

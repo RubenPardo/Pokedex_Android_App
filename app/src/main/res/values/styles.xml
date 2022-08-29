@@ -31,4 +31,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="checkBoxFavoritoStyle" parent="Base.Theme.AppCompat">
+        <item name="android:buttonTint">@color/checkbox_fav_selector</item>
+        <item name="android:button">@drawable/checkbox_fav_selector</item>
+    </style>
+
 </resources>

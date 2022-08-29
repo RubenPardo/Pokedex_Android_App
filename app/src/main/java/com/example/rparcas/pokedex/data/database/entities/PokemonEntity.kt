@@ -19,7 +19,8 @@ data class PokemonEntity (
     @ColumnInfo(name ="base_experience") val base_experience: Int,
     @ColumnInfo(name ="height") val height: Int,
     @ColumnInfo(name ="weight") val weight: Int,
-    @ColumnInfo(name ="stats") val stats: String?
+    @ColumnInfo(name ="stats") val stats: String?,
+    @ColumnInfo(name ="isFav") val isFav: Int
 )
 
 
@@ -35,6 +36,6 @@ fun PokemonDomain.toDatabase() =
         base_experience = base_experience,
         height = height,
         weight = weight,
-        stats = Gson().toJson(stats)
-
+        stats = Gson().toJson(stats),
+        isFav =  if(isFav) 1 else 0
     )

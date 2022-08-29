@@ -1,5 +1,6 @@
 package com.example.rparcas.pokedex.ui
 
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
@@ -12,11 +13,23 @@ class PokemonViewHolder (view: View): RecyclerView.ViewHolder(view) {
 
     private val binding = PokemonItemBinding.bind(view)
 
-    fun bind(pokemon: PokemonDomain, numOfColumnGrid: Int){
+    fun bind(
+        pokemon: PokemonDomain,
+        numOfColumnGrid: Int,
+        clickItemListener: (View) -> Unit,
+        favCheckBoxListener: (View) -> Unit
+    ){
+
+        // callbacks
+        this.itemView.setOnClickListener(clickItemListener)
+        binding.chekBoxFavPokemon.setOnClickListener(favCheckBoxListener)
 
         // color de la tarjeta
         binding.cvPokemon.setCardBackgroundColor(getColor(binding.root.context,Utils.obtenerReferenciaColorSegunTipo(pokemon.tipos[0].type.name)))
         Picasso.get().load(pokemon.officialArtwork ?: pokemon.sprites[0]).into(binding.ivPokemonItem)
+        Log.d("PRUEBA","bind view holder, isFav: ${pokemon.isFav}")
+        binding.chekBoxFavPokemon.isChecked = pokemon.isFav
+
 
         if(numOfColumnGrid == 1){
             // modo linear

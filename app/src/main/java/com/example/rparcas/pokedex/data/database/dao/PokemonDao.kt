@@ -21,5 +21,8 @@ interface PokemonDao {
     @Query("select * from pokemon_table where id=:id")
     suspend fun getPokemonById(id: Int): PokemonEntity
 
+    @Query("UPDATE pokemon_table SET isFav = :fav WHERE id = :idPokemon")
+    suspend fun setFavPokemon(fav: Boolean, idPokemon: Int):Int
+
 }
 

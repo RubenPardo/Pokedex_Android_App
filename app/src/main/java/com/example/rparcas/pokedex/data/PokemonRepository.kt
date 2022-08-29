@@ -40,4 +40,13 @@ class PokemonRepository @Inject constructor(
         return dao.getPokemonById(id).toDomain()
     }
 
+    /**
+     * @param fav T/F
+     * @param idPokemon id del pokemon a poner o quitar fav
+     * @return numero de columnas afectadas
+     */
+    suspend fun setFavPokemon(fav: Boolean, idPokemon: Int):Int {
+       return dao.setFavPokemon(fav,idPokemon)
+    }
+
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.rparcas.pokedex.domain.ObtenerListaPokemonAPI
 import com.example.rparcas.pokedex.domain.ObtenerListaPokemonDB
 import com.example.rparcas.pokedex.domain.PokemonDomain
+import com.example.rparcas.pokedex.domain.SetFavPokemon
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,15 +16,26 @@ import kotlin.math.ceil
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
     private val obtenerListaPokemonAPI: ObtenerListaPokemonAPI,
-    private val obtenerListaPokemonDB: ObtenerListaPokemonDB
+    private val obtenerListaPokemonDB: ObtenerListaPokemonDB,
+    private val setFavPokemonDB: SetFavPokemon
 ): ViewModel(){
 
 
     val listPokemonLiveData =  MutableLiveData<List<PokemonDomain>>()
+    val pokemonFav = MutableLiveData<PokemonDomain>() // objeto hecho para cuando se inicie la tarea asincrona de dar fav
     private val listaPokemon = mutableListOf<PokemonDomain>()
     val tipoFiltro1 = MutableLiveData<String?>() // filtro de tipo pokemon 1
     val tipoFiltro2 = MutableLiveData<String?>() // filtro de tipo pokemon 2
     private var nombrePokemonFiltro:String? = null
+
+
+    fun setFavPokemon(isFav:Boolean,pokemon:PokemonDomain){
+        viewModelScope.launch {
+            setFavPokemonDB(isFav,pokemon.id)
+            pokemon.isFav = isFav
+            pokemonFav.postValue(pokemon)
+        }
+    }
 
 
     /**
@@ -177,6 +189,7 @@ class PokemonListViewModel @Inject constructor(
         return list
 
     }
+
 
 
 

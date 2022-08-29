@@ -48,7 +48,11 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
 
         initRecyclerView()
+        // obtener la lista de pokemon
+        pokemonListViewModel.getListPokemon(1154)
 
+
+        // callbacks ---------------------
         binding.toggleListGridListaPokemon.setOnClickListener{
             val numColumns:Int = if(it.isActivated){
                 // modo lista
@@ -61,9 +65,20 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             adapter.numOfColumnGrid = numColumns
             binding.rvPokemon.layoutManager = GridLayoutManager(this,numColumns)
         }
+        // callback del boton que abre los filtros de tipo 1
+        binding.chipButtonFiltroTipoPokemon1.setOnClickListener{
+            mostrarDialogFiltroTipos(TAG_FILTRO_1)
+        }
+        // callback del boton que abre los filtros de tipo 2
+        binding.chipButtonFiltroTipoPokemon2.setOnClickListener{
+            mostrarDialogFiltroTipos(TAG_FILTRO_2)
+        }
 
-        pokemonListViewModel.getListPokemon(1154)
+        binding.svNombrePokemon.setOnQueryTextListener(this)
 
+
+
+        // observers del view model --------------------
         pokemonListViewModel.listPokemonLiveData.observe(this,{
 
 
@@ -84,17 +99,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         })
 
-        // callback del boton que abre los filtros de tipo 1
-        binding.chipButtonFiltroTipoPokemon1.setOnClickListener{
-            mostrarDialogFiltroTipos(TAG_FILTRO_1)
-        }
-        // callback del boton que abre los filtros de tipo 2
-        binding.chipButtonFiltroTipoPokemon2.setOnClickListener{
-            mostrarDialogFiltroTipos(TAG_FILTRO_2)
-        }
-
-        binding.svNombrePokemon.setOnQueryTextListener(this)
-
         pokemonListViewModel.tipoFiltro1.observe(this,{
             binding.chipButtonFiltroTipoPokemon1.setChipBackgroundColorResource(
                 Utils.obtenerReferenciaColorSegunTipo(
@@ -113,6 +117,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             )
             binding.chipButtonFiltroTipoPokemon2.text = Utils.capitalize(it ?: "TIPO 2")
             binding.chipButtonFiltroTipoPokemon2.tag = it
+        })
+
+        pokemonListViewModel.pokemonFav.observe(this,{pokemon ->
+            adapter.notifyItemChanged(adapter.getPositionByIdPokemon(pokemon.id))
         })
     }
 
@@ -135,6 +143,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             object : PokemonAdapter.ItemClickListener {
                 override fun onItemClick(idPokemon:Int, view:View){
                     navegarAPokemonInfoActivity(idPokemon,view)
+                }
+            },
+            // callback fav button
+            object: PokemonAdapter.FavCheckBoxListener {
+                override fun onItemClick(isFav:Boolean,pokemon:PokemonDomain){
+                    pokemonListViewModel.setFavPokemon(isFav,pokemon)
                 }
             }
         )

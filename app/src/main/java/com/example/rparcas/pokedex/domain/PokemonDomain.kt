@@ -16,7 +16,8 @@ data class PokemonDomain (
     val base_experience: Int,
     val height: Int,
     val weight: Int,
-    val stats: List<PokemonStat>
+    val stats: List<PokemonStat>,
+    var isFav: Boolean
 )
 
 
@@ -26,7 +27,8 @@ fun PokemonModel.toDomain() = PokemonDomain(id = id,order=order,name=name,
     sprites = listOf(sprites.frontDefault,sprites.backDefault),
     tipos = types,
     base_experience = base_experience, height = height, weight = weight,
-    stats = stats.map { it.toDomain() }
+    stats = stats.map { it.toDomain() },
+    isFav = false
     )
 
 fun PokemonEntity.toDomain() = PokemonDomain(id = id,order=order,name=name,
@@ -34,7 +36,8 @@ fun PokemonEntity.toDomain() = PokemonDomain(id = id,order=order,name=name,
     sprites = Gson().fromJson(sprites,Array<String>::class.java).toList(),
     tipos = Gson().fromJson(tipos,Array<PokemonTypes>::class.java).toList(),
     base_experience = base_experience, height = height, weight = weight,
-    stats = Gson().fromJson(stats,Array<PokemonStat>::class.java).toList()
+    stats = Gson().fromJson(stats,Array<PokemonStat>::class.java).toList(),
+    isFav = isFav == 1 // se guarda en 1 o 0
 )
 
 

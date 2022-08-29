@@ -40,11 +40,11 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <CheckBox
-            android:id="@+id/imageButton"
+            android:id="@+id/chekBoxFavPokemon"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginEnd="8dp"
-            android:button="@drawable/checkbox_fav_selector"
+            style="@style/checkBoxFavoritoStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

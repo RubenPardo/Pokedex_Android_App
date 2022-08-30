@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.example.rparcas.pokedex.ui.view.MainActivity
+import com.example.rparcas.pokedex.ui.view.PokemonListActivity
 import com.example.rparcas.pokedex.R
 import com.example.rparcas.pokedex.Utils
 import com.example.rparcas.pokedex.databinding.BottomSheetFiltroTiposLayoutBinding
@@ -69,11 +69,11 @@ class BottomSheetFragmentTipoPokemon() : BottomSheetDialogFragment(),View.OnClic
         chipButton.setOnClickListener(this)
 
 
-        if (this.tag == MainActivity.TAG_FILTRO_1 && tipo == pokemonListViewModel.tipoFiltro1.value){
+        if (this.tag == PokemonListActivity.TAG_FILTRO_1 && tipo == pokemonListViewModel.tipoFiltro1.value){
             // si hay un tipo seleccionado poner una X
             chipButton.isCloseIconVisible = true
         }
-        if (this.tag == MainActivity.TAG_FILTRO_2 && tipo == pokemonListViewModel.tipoFiltro2.value){
+        if (this.tag == PokemonListActivity.TAG_FILTRO_2 && tipo == pokemonListViewModel.tipoFiltro2.value){
             // si hay un tipo seleccionado poner una X
             chipButton.isCloseIconVisible = true
 
@@ -83,9 +83,9 @@ class BottomSheetFragmentTipoPokemon() : BottomSheetDialogFragment(),View.OnClic
 
     override fun onClick(p0: View?) {
 
-        if(this.tag == MainActivity.TAG_FILTRO_1){
+        if(this.tag == PokemonListActivity.TAG_FILTRO_1){
             pokemonListViewModel.filtrarTipo1(p0?.tag.toString())
-        }else if(this.tag == MainActivity.TAG_FILTRO_2){
+        }else if(this.tag == PokemonListActivity.TAG_FILTRO_2){
             pokemonListViewModel.filtrarTipo2(p0?.tag.toString())
         }
         dismiss()

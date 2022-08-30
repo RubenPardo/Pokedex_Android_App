@@ -4,27 +4,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.hilt.android.AndroidEntryPoint
-import com.example.rparcas.pokedex.databinding.ActivityMainBinding
 import com.example.rparcas.pokedex.domain.PokemonDomain
 import com.example.rparcas.pokedex.ui.BottomSheetFragmentTipoPokemon
 import com.example.rparcas.pokedex.ui.PokemonAdapter
 import com.example.rparcas.pokedex.ui.viewmodel.PokemonListViewModel
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rparcas.pokedex.Utils
 import androidx.core.app.ActivityOptionsCompat
 import com.example.rparcas.pokedex.R
+import com.example.rparcas.pokedex.databinding.ActivityListPokemonBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
 //https://pokeapi.co
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
+class PokemonListActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityListPokemonBinding
     private val pokemonListViewModel: PokemonListViewModel by viewModels()
 
     private val mutableListPokemon:MutableList<PokemonDomain> = mutableListOf()
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
 
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityListPokemonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -72,6 +73,11 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         // callback del boton que abre los filtros de tipo 2
         binding.chipButtonFiltroTipoPokemon2.setOnClickListener{
             mostrarDialogFiltroTipos(TAG_FILTRO_2)
+        }
+
+        binding.cbFavFilter.setOnClickListener{
+            it.isActivated = !it.isActivated
+            pokemonListViewModel.filtrarFavoritos(it.isActivated)
         }
 
         binding.svNombrePokemon.setOnQueryTextListener(this)

@@ -1,8 +1,6 @@
 package com.example.rparcas.pokedex.ui.view
 
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.ColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -34,7 +32,7 @@ class PokemonInfoActivity : AppCompatActivity() {
         binding = ActivityPokemonInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val idPokemon = intent.extras?.getInt(MainActivity.KEY_POKEMON_ID)
+        val idPokemon = intent.extras?.getInt(PokemonListActivity.KEY_POKEMON_ID)
         if(idPokemon!=null){
             pokemonInfoViewModel.onCreate(idPokemon)
             pokemonInfoViewModel.pokemonLiveData.observe(this,

@@ -1,6 +1,5 @@
 package com.example.rparcas.pokedex.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,8 +26,17 @@ class PokemonListViewModel @Inject constructor(
     val tipoFiltro1 = MutableLiveData<String?>() // filtro de tipo pokemon 1
     val tipoFiltro2 = MutableLiveData<String?>() // filtro de tipo pokemon 2
     private var nombrePokemonFiltro:String? = null
+    private var favoritoFiltro:Boolean = false
 
-
+    /**
+     * Poner o quitar favorito en la BD a un pokemon
+     * @param isFav T/F
+     * @param pokemon pokemon a modificar
+     *
+     * @return como hay que avisar al adapter que se ha modificado un elemento
+     * pasamos el pokemon por un live data para que la vista modifique el adapter
+     *
+     */
     fun setFavPokemon(isFav:Boolean,pokemon:PokemonDomain){
         viewModelScope.launch {
             setFavPokemonDB(isFav,pokemon.id)
@@ -75,7 +83,12 @@ class PokemonListViewModel @Inject constructor(
                 // hay datos en la BD, publicar en la vista
                 listaPokemon.addAll(pokemonList)
                 // de esta forma si se actualiza la vista y se vuelve a pedir, se vuelven a aplicar los filtros
-                listPokemonLiveData.postValue(filtrarListaPokemon(tipoFiltro1.value,tipoFiltro2.value,nombrePokemonFiltro))
+                listPokemonLiveData.postValue(filtrarListaPokemon(
+                    tipoFiltro1.value,
+                    tipoFiltro2.value,
+                    nombrePokemonFiltro,
+                    favoritoFiltro
+                ))
 
             }
 
@@ -97,7 +110,12 @@ class PokemonListViewModel @Inject constructor(
             tipoFiltro1.postValue(tipo1) // esto lanzo un thread para avisar a los observables
             tipoFiltro1.value = tipo1
         }
-        listPokemonLiveData.postValue(filtrarListaPokemon(tipoFiltro1.value,tipoFiltro2.value,this.nombrePokemonFiltro))
+        listPokemonLiveData.postValue(filtrarListaPokemon(
+            tipoFiltro1.value,
+            tipoFiltro2.value,
+            this.nombrePokemonFiltro,
+            favoritoFiltro
+        ))
     }
 
     /**
@@ -114,7 +132,12 @@ class PokemonListViewModel @Inject constructor(
             tipoFiltro2.postValue(tipo2)
             tipoFiltro2.value = tipo2
         }
-        listPokemonLiveData.postValue(filtrarListaPokemon(tipoFiltro1.value,tipoFiltro2.value,this.nombrePokemonFiltro))
+        listPokemonLiveData.postValue(filtrarListaPokemon(
+            tipoFiltro1.value,
+            tipoFiltro2.value,
+            this.nombrePokemonFiltro,
+            favoritoFiltro
+        ))
     }
 
 
@@ -126,8 +149,23 @@ class PokemonListViewModel @Inject constructor(
     fun filtrarPorNombre(nombre: String?) {
         this.nombrePokemonFiltro = nombre
         // aplicamos todos los filtros
-        listPokemonLiveData.postValue(filtrarListaPokemon(tipoFiltro1.value,tipoFiltro2.value,this.nombrePokemonFiltro))
+        listPokemonLiveData.postValue(filtrarListaPokemon(
+            tipoFiltro1.value,
+            tipoFiltro2.value,
+            this.nombrePokemonFiltro,
+            favoritoFiltro
+        ))
 
+    }
+
+    /**
+     * @param isFav
+     * @return lista de pokemon por el live data filtrada con o sin favoritos
+     */
+    fun filtrarFavoritos(isFav: Boolean) {
+        favoritoFiltro = isFav
+        // aplicamos todos los filtros
+        listPokemonLiveData.postValue(filtrarListaPokemon(tipoFiltro1.value,tipoFiltro2.value,this.nombrePokemonFiltro,this.favoritoFiltro))
     }
 
 
@@ -148,7 +186,12 @@ class PokemonListViewModel @Inject constructor(
      * @return lista de [PokemonDomain] filtrada por los tipos
      *
      */
-    private fun filtrarListaPokemon(tipo1:String?, tipo2: String?, nombre:String?):List<PokemonDomain>{
+    private fun filtrarListaPokemon(
+        tipo1: String?,
+        tipo2: String?,
+        nombre: String?,
+        favoritoFiltro: Boolean
+    ):List<PokemonDomain>{
         // filtramos primero por tipo
         var list =
             if(tipo1.isNullOrEmpty() && tipo2.isNullOrEmpty()){
@@ -181,6 +224,13 @@ class PokemonListViewModel @Inject constructor(
         // filtrar por nombre
         list = if(nombre!=null){
             list.filter { it.name.contains(nombre) }
+        }else{
+            list
+        }
+
+        // filtrar por favorito
+        list = if(this.favoritoFiltro){
+            list.filter { it.isFav }
         }else{
             list
         }
